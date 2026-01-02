@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Invitation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .date {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .heart-icon {
+        width: 24px;
+        height: 24px;
+        color: #ec4899;
+        fill: #ec4899;
+      }
+
+      .create-invitation-text {
+        font-family: "Dancing Script", cursive;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-style: italic;
+        font-size: 32px;
+        text-align: center;
+        margin-top: 0px;
+        margin-bottom: 2%;
+      }
+
+      .date-text {
+        font-family: "Dancing Script", cursive;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-style: italic;
+        font-size: 54px;
+      }
+
+      .invitation-text {
+        font-family: "Dancing Script", cursive;
+        font-optical-sizing: auto;
+        font-weight: 600;
+        font-style: normal;
+        font-size: 46px;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, sans-serif;
+        background: #0f0f0f;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .card {
+        background: #151515;
+        border-radius: 20px;
+        padding: 32px;
+        width: 100%;
+        max-width: 420px;
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: 22px;
+      }
+
+      form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      input {
+        width: auto;
+        padding: 12px 14px;
+        margin-bottom: 14px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        background: #222;
+        color: #fff;
+      }
+
+      button,
+      a.button {
+        width: auto;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        background: #ec4899;
+        color: #ffffff;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .button.location-btn {
+        background: #ec4899;
+        border-radius: 9999px;
+        text-align: right;
+        padding: 10px;
+      }
+
+      .location-icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .location {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+      }
+
+      .col-span-2 {
+        grid-column: span 2;
+      }
+
+      .invite p {
+        margin: 6px 0;
+        color: #ccc;
+      }
+
+      .invite .highlight {
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .no-margin {
+        margin: 0;
+      }
+
+      .people {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+
+      .person {
+        text-align: center;
+      }
+
+      .person .label {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #9ca3af;
+        margin-bottom: 4px;
+      }
+
+      .person .name {
+        font-size: 24px;
+        font-weight: 600;
+        color: #ffffff;
+        font-style: italic;
+      }
+
+      .divider {
+        font-family: "Dancing Script", cursive;
+        font-size: 24px;
+        color: #a1a1aa;
+        padding: 0 4px;
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 16px;
+          min-height: 100vh;
+        }
+
+        .card {
+          max-width: 100%;
+          padding: 20px;
+          border-radius: 16px;
+        }
+
+        form {
+          grid-template-columns: 1fr;
+        }
+
+        .col-span-2 {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card" id="formCard">
+      <p class="create-invitation-text">Create Invitation</p>
+      <form>
+        <input id="from" placeholder="From" />
+        <input id="to" placeholder="To" />
+        <input id="date" type="date" />
+        <input id="time" type="time" />
+        <input id="map" class="col-span-2" placeholder="Google Maps URL" />
+        <button type="button" class="col-span-2" onclick="createInvite()">
+          Generate Invitation
+        </button>
+      </form>
+    </div>
+
+    <div class="card invite" id="inviteCard" style="display: none">
+      <div class="date">
+        <h1 class="date-text no-margin">Date</h1>
+        <i data-lucide="heart" class="heart-icon"></i>
+      </div>
+      <h2 class="invitation-text no-margin">Invitation</h2>
+
+      <div class="people">
+        <div class="person">
+          <span class="name" id="iFrom"></span>
+        </div>
+
+        <div class="divider">to</div>
+
+        <div class="person">
+          <span class="name" id="iTo"></span>
+        </div>
+      </div>
+
+      <br />
+      <div class="location">
+        <div>
+          <p>Date & Time</p>
+          <p>
+            <span class="highlight" id="iDate"></span>
+            <span> - </span>
+            <span class="highlight" id="iTime"></span>
+          </p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <a id="iMap" class="button location-btn" target="_blank"
+            ><i data-lucide="map-pin" class="location-icon"></i
+          ></a>
+          <button id="shareBtn" class="button location-btn" onclick="shareInvite()">
+            <i data-lucide="link" class="location-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+      const params = new URLSearchParams(window.location.search);
+
+      const hasInvite =
+        params.has("from") &&
+        params.has("to") &&
+        params.has("date") &&
+        params.has("time") &&
+        params.has("map");
+
+      if (hasInvite) {
+        document.getElementById("formCard").style.display = "none";
+        document.getElementById("inviteCard").style.display = "block";
+
+        document.getElementById("iFrom").textContent = params.get("from");
+        document.getElementById("iTo").textContent = params.get("to");
+        document.getElementById("iDate").textContent = params.get("date");
+        document.getElementById("iTime").textContent = params.get("time");
+        document.getElementById("iMap").href = params.get("map");
+
+        if (params.get("hideShare") === "true") {
+          document.getElementById("shareBtn").style.display = "none";
+        }
+      }
+
+      function formatDateDDMM(value) {
+        if (!value) return "";
+        const [year, month, day] = value.split("-");
+        return `${day}/${month}`;
+      }
+
+      function shareInvite() {
+        navigator.clipboard.writeText(window.location.href+`&hideShare=true`).then(() => {
+          alert("Link copied to clipboard!");
+        });
+      }
+
+      function createInvite() {
+        const from = document.getElementById("from").value;
+        const to = document.getElementById("to").value;
+        const dateRow = document.getElementById("date").value;
+        const date = formatDateDDMM(dateRow);
+        const time = document.getElementById("time").value;
+        const map = document.getElementById("map").value;
+
+        const url =
+          `${location.pathname}?from=${encodeURIComponent(from)}` +
+          `&to=${encodeURIComponent(to)}` +
+          `&date=${encodeURIComponent(date)}` +
+          `&time=${encodeURIComponent(time)}` +
+          `&map=${encodeURIComponent(map)}`;
+
+        window.location.href = url;
+      }
+    </script>
+  </body>
+</html>
